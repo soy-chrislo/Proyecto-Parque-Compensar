@@ -11,14 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/*
-* Así mismo, cuando se realice el registro de los N visitantes, por medio de un cuadro
-de dialogo, se le debe mostrar al usuario un resumen del total que debe pagar por
-los N visitantes registrados, e indicar el número de personas que son mayores de
-edad, menores de edad, el nombre de cada uno de los visitantes y valor de entrada
-de cada uno.
-
-* */
 public class Principal extends JFrame implements ActionListener {
     private File file;
     private String extension;
@@ -43,14 +35,11 @@ public class Principal extends JFrame implements ActionListener {
     private JFileChooser archivoGuardar;
     private JButton btnGuardar, btnLimpiar, btnSalir, btnSeleccionarArchivo, btnResumen, btnCreditos;
 
-
     private static Font fuenteTitulos = new Font("Arial", Font.BOLD, 20);
     private static Font fuenteTextos = new Font("Arial", Font.PLAIN, 13);
 
-
     GridBagConstraints constraints;
-
-    /*TEMPORAL*/
+    
     String nombreTemp = "";
     String valorTemp = "";
     String edadTemp = "";
@@ -116,7 +105,6 @@ public class Principal extends JFrame implements ActionListener {
         ubicarGrilla(1, 2, 1);
 
         txtNombre.setFont(fuenteTextos);
-        //txtNombre.setSize(anchoJTextField, altoJTextField);
         txtNombre.setPreferredSize(new Dimension(anchoJTextField, altoJTextField));
         add(txtNombre, constraints);
 
@@ -199,7 +187,6 @@ public class Principal extends JFrame implements ActionListener {
 
         archivoGuardar.setFileSelectionMode(JFileChooser.FILES_ONLY);
         archivoGuardar.setDialogTitle("Guardar");
-        /*add(archivoGuardar, constraints);*/
         btnSeleccionarArchivo.addActionListener(this);
         add(btnSeleccionarArchivo, constraints);
 
@@ -290,7 +277,6 @@ public class Principal extends JFrame implements ActionListener {
         boolean valido = true;
 
         String regexName = "^[A-Z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Z][A-Za-z]*)*$";
-        //String regexName = "^[a-zA-Z].*[\s\.]*$";
         String regexNumIdentificacion = "^[0-9]{1,10}$";
         String regexEdad = "^[0-9]{1,3}$";
 
@@ -347,7 +333,6 @@ public class Principal extends JFrame implements ActionListener {
 
         if (edad.equals("")) {
             valido = false;
-            //JOptionPane.showMessageDialog(null, "Debe ingresar una edad");
             lblEdad = new JLabel("• Edad del Visitante");
             lblEdad.setBounds(10, 60, 300, 20);
             frame.add(lblEdad);
@@ -355,7 +340,6 @@ public class Principal extends JFrame implements ActionListener {
 
         if (name.equals("")) {
             valido = false;
-            //JOptionPane.showMessageDialog(null, "Debe ingresar un nombre");
             lblName = new JLabel("• Nombre del Visitante");
             lblName.setBounds(10, 80, 300, 20);
             frame.add(lblName);
@@ -363,7 +347,6 @@ public class Principal extends JFrame implements ActionListener {
 
         if (numIdentificacion.equals("")) {
             valido = false;
-            //JOptionPane.showMessageDialog(null, "Debe ingresar un numero de identificacion");
             lblNumIdentificacion = new JLabel("• Número de Identificación");
             lblNumIdentificacion.setBounds(10, 100, 300, 20);
             frame.add(lblNumIdentificacion);
@@ -371,7 +354,6 @@ public class Principal extends JFrame implements ActionListener {
 
         if (categoriaAfilicion.getSelectedItem().equals("")) {
             valido = false;
-            //JOptionPane.showMessageDialog(null, "Debe seleccionar una categoria de afilicion");
             lblCategoriaAfilicion = new JLabel("• Categoria de Afilicion");
             lblCategoriaAfilicion.setBounds(10, 120, 300, 20);
             frame.add(lblCategoriaAfilicion);
@@ -384,7 +366,6 @@ public class Principal extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnGuardar) {
             ejecutarBtnGuardar();
-            //ejecutarBtnLimpiar();
         }
         if (e.getSource() == btnResumen) {
             ejecutarBtnResumen();
@@ -419,7 +400,7 @@ public class Principal extends JFrame implements ActionListener {
         txtValorPagar.setText(valorPagar);
 
         try {
-            FileWriter fileWriter = new FileWriter(file, true); // Segundo argumento: append = true para agregar al final del archivo.
+            FileWriter fileWriter = new FileWriter(file, true); 
             fileWriter.write("Nombre: " + txtNombre.getText() + "\n");
             fileWriter.write("Numero de Identificacion: " + txtNumIdentificacion.getText() + "\n");
             fileWriter.write("Edad: " + txtEdad.getText() + "\n");
@@ -446,7 +427,6 @@ public class Principal extends JFrame implements ActionListener {
         ArrayList edades = new ArrayList<String>();
         Scanner scan;
         try {
-            /*Método que retorne en el archivo file todo el contenido.*/
             scan = new Scanner(archivo);
             while (scan.hasNextLine()) {
                 contenido.add(i, scan.nextLine());
@@ -454,15 +434,9 @@ public class Principal extends JFrame implements ActionListener {
             }
             i = 0;
             while (i < contenido.size()) {
-                /* Método que retorne el arreglo de los valores según la propiedad (Nombre, pago, edad)
-                * valoresArreglo(contenido, "Nombre");
-                * */
                 if (contenido.get(i).toString().contains("Nombre")) {
-                    //System.out.println("Se ha encontrado un nombre");
                     int i2 = 8;
                     while (i2 < contenido.get(i).toString().length()) {
-                        //System.out.println(contenido.get(i).toString());
-                        //System.out.println(contenido.get(i).toString().charAt(i2));
                         nombreTemp = nombreTemp + contenido.get(i).toString().charAt(i2);
                         i2++;
                     }
@@ -470,16 +444,12 @@ public class Principal extends JFrame implements ActionListener {
                     nombreTemp = "";
                 }
                 if (contenido.get(i).toString().contains("Valor a Pagar")) {
-                    //System.out.println("Se ha encontrado un valor a pagar");
                     int i2 = 14;
                     while (i2 < contenido.get(i).toString().length()) {
-                        //System.out.println(contenido.get(i).toString());
-                        //System.out.println(contenido.get(i).toString().charAt(i2));
                         valorTemp = valorTemp + contenido.get(i).toString().charAt(i2);
                         i2++;
                     }
                     valoresPagados.add(valorTemp);
-                    //System.out.println(valorTemp);
                     valorTemp = "";
                 }
                 if (contenido.get(i).toString().contains("Edad")) {
@@ -489,21 +459,10 @@ public class Principal extends JFrame implements ActionListener {
                         i2++;
                     }
                     edades.add(edadTemp.replaceAll("\\s", ""));
-                    //System.out.println(edadTemp);
                     edadTemp = "";
                 }
                 i++;
             }
-
-
-            /*i = 0;
-            while (i < contenido.size()) {
-                System.out.println(contenido.get(i));
-                i++;
-            }*/
-            /*while (scan.hasNextLine()) {
-                System.out.println(scan.nextLine());
-            }*/
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -517,7 +476,6 @@ public class Principal extends JFrame implements ActionListener {
             System.out.println("-");
         }
 
-        //JOptionPane.showMessageDialog(null, "Resumen de visitantes \n Prueba", "Resumen", JOptionPane.INFORMATION_MESSAGE);
         InformacionResumen informacionResumen = new InformacionResumen(totalPagar(valoresPagados), mayoresEdad(edades), menoresEdad(edades), nombresVisitantes, valoresPagados);
 
     }
@@ -621,6 +579,7 @@ class InformacionCreditos extends JFrame {
         add(lblCorreo);
     }
 }
+
 class InformacionResumen extends JFrame {
       private JLabel lblTotalPagar, lblMayores, lblMenores;
       private JTextArea txtInformacion;
@@ -635,33 +594,23 @@ class InformacionResumen extends JFrame {
         setLayout(null);
         setVisible(true);
 
-
-
         lblTotalPagar = new JLabel("Total a Pagar: " + totalPagar, SwingConstants.CENTER);
         lblTotalPagar.setBounds(10, 10, 380, 20);
-        //lblTotalPagar.setSize(300, 20);
         add(lblTotalPagar);
-
 
         lblMayores = new JLabel("Mayores de Edad: " + mayoresEdad, SwingConstants.CENTER);
         lblMayores.setBounds(10, 30, 380, 20);
-        //lblMayores.setSize(300, 20);
         add(lblMayores);
-
 
         lblMenores = new JLabel("Menores de Edad: " + menoresEdad, SwingConstants.CENTER);
         lblMenores.setBounds(10, 50, 380, 20);
-        //lblMenores.setSize(300, 20);
         add(lblMenores);
 
         scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-
         txtInformacion = new JTextArea();
         txtInformacion.setBounds(10, 70, 370, 130);
-        //txtInformacion.setSize(300, 80);
-        //txtInformacion.add(new JScrollBar());
         txtInformacion.setEditable(false);
 
         for (int i = 0; i < nombresVisitantes.size(); i++) {
@@ -670,13 +619,9 @@ class InformacionResumen extends JFrame {
             txtInformacion.append("-\n");
         }
 
-
         scrollPane.setBounds(10, 70, 370, 130);
-        //scrollPane.setSize(300, 80);
         scrollPane.setViewportView(txtInformacion);
         add(scrollPane);
-        //add(txtInformacion);
-
 
     }
 }
